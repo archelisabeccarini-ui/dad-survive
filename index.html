@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dad Survive - Guida per Super Papà</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#0A1F44">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Dad Survive">
+    <meta name="description" content="Guida di sopravvivenza per Super Papà">
+    
+    <!-- Web App Manifest (Inline Data URI for single-file PWA) -->
+    <link rel="manifest" href="data:application/manifest+json;base64,ewogICJuYW1lIjogIkRhZCBTdXJ2aXZlIiwKICAic2hvcnRfbmFtZSI6ICJEYWQgU3Vydml2ZSIsCiAgInN0YXJ0X3VybCI6ICIuIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMEExRjQ0IiwKICAidGhlbWVfY29sb3IiOiAiIzBBMUY0NCIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUFBRUFBQUFCQkNBWUFBQUFmYzhKSkFBQUFBWE5TUjBJQXJzNGM2UUFBQUFSblFVMUJBQUM4alZ3S05ROWdBQUFBaFpVaFpYUm5hV1p6SUZSbFpXNWhjbVF1Ym1jQUFBQXpTVVJCVkdSall5Z2dBQUFBQkZSTFJYQTRVQUFBRUFBQUFBQmhSREU9IiwKICAgICAgInNpemVzIjogIjI1NngyNTYiLAogICAgICAidHlwZSI6ICJpbWFnZS9wbmciCiAgICB9CiAgXQp9">
+
+    <style>
+        :root {
+            --navy: #0A1F44;
+            --neon-blue: #00E5FF;
+            --neon-pink: #FF2D95;
+            --text-light: #E0E6ED;
+            --glass: rgba(255, 255, 255, 0.05);
+            --shadow-3d: 0 6px 0 #061633, 0 8px 15px rgba(0,0,0,0.4);
+            --shadow-3d-active: 0 2px 0 #061633, 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--navy);
+            background-image: linear-gradient(180deg, #0A1F44 0%, #050E1D 100%);
+            color: var(--text-light);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--text-light);
+            text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--neon-pink);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(255, 45, 149, 0.5);
+        }
+
+        /* Navigation Tabs */
+        .nav-container {
+            display: flex;
+            gap: 10px;
+            background: var(--glass);
+            padding: 5px;
+            border-radius: 50px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            border-radius: 40px;
+            border: none;
+            background: transparent;
+            color: var(--text-light);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .nav-btn.active {
+            background: var(--neon-blue);
+            color: var(--navy);
+            box-shadow: 0 0 20px var(--neon-blue);
+        }
+
+        /* Main Container */
+        .content-wrapper {
+            width: 90%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .section {
+            display: none;
+            width: 100%;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Grid of buttons */
+        .button-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .button-grid .btn-item:last-child:nth-child(odd) {
+            grid-column: span 2;
+        }
+
+        /* 3D Action Buttons */
+        .action-btn {
+            background: #162C55;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: white;
+            padding: 15px 10px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: var(--shadow-3d);
+            transition: all 0.1s ease;
+            position: relative;
+            outline: none;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 #061633, 0 12px 20px rgba(0,0,0,0.4);
+            border-color: var(--neon-blue);
+        }
+
+        .action-btn:active {
+            transform: translateY(4px);
+            box-shadow: var(--shadow-3d-active);
+        }
+
+        .action-btn.selected {
+            background: linear-gradient(145deg, #1a3a75, #0A1F44);
+            border: 1px solid var(--neon-pink);
+            box-shadow: 0 0 15px var(--neon-pink), var(--shadow-3d-active);
+            transform: translateY(4px);
+        }
+
+        /* Card Content */
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-top: 10px;
+            min-height: 200px;
+            display: none;
+            animation: slideUp 0.4s ease-out;
+        }
+
+        .card.visible {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card h3 {
+            color: var(--neon-blue);
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card .movie-tag {
+            display: inline-block;
+            background: rgba(255, 45, 149, 0.2);
+            color: var(--neon-pink);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            border: 1px solid var(--neon-pink);
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: #BDC9D7;
+            line-height: 1.5;
+        }
+
+        .sos-badge {
+            font-size: 0.8rem;
+            color: #94A3B8;
+            margin-bottom: 5px;
+            display: block;
+            text-transform: uppercase;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            padding: 2rem;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.3);
+            text-align: center;
+        }
+
+        /* Mobile Specific */
+        @media (max-width: 400px) {
+            h1 { font-size: 2rem; }
+            .action-btn { font-size: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Dad Survive</h1>
+        <p class="subtitle" style="text-align: center;">Guida per Super Papà</p>
+    </header>
+
+    <div class="nav-container">
+        <button class="nav-btn active" onclick="switchSection('dad')" id="nav-dad" aria-label="Sezione Papà">How you feel?</button>
+        <button class="nav-btn" onclick="switchSection('child')" id="nav-child" aria-label="Sezione Bambino">How HE feels?</button>
+    </div>
+
+    <main class="content-wrapper">
+        
+        <!-- SECTION 1: DAD -->
+        <div id="section-dad" class="section active">
+            <div class="button-grid">
+                <button class="action-btn" onclick="showContent('dad', 0, this)" aria-label="Felice e Avventuroso">Felice & <br>Avventuroso</button>
+                <button class="action-btn" onclick="showContent('dad', 1, this)" aria-label="Stile Cool">Cool</button>
+                <button class="action-btn" onclick="showContent('dad', 2, this)" aria-label="Stile Romantico">Romantico</button>
+                <button class="action-btn" onclick="showContent('dad', 3, this)" aria-label="Stile Occupato">Busy</button>
+                <button class="action-btn" onclick="showContent('dad', 4, this)" aria-label="Stile Stressato">Stress al <br>Massimo</button>
+            </div>
+
+            <div id="display-dad" class="card-container">
+                <!-- Content injected by JS -->
+                <div class="card" id="default-card-dad" style="display: block; text-align: center; border-style: dashed;">
+                    <p>Seleziona come ti senti oggi, <br>Capitano.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: CHILD -->
+        <div id="section-child" class="section">
+            <p class="subtitle" style="font-size: 0.9rem; text-align: center; margin-bottom: 1rem;">SOS – Surviving a 3-Year-Old</p>
+            <div class="button-grid">
+                <button class="action-btn" onclick="showContent('child', 0, this)" aria-label="Meltdown Totale">Meltdown <br>Totale</button>
+                <button class="action-btn" onclick="showContent('child', 1, this)" aria-label="No a tutto">NO a <br>Tutto</button>
+                <button class="action-btn" onclick="showContent('child', 2, this)" aria-label="Modalità Caos">Modalità <br>Caos</button>
+                <button class="action-btn" onclick="showContent('child', 3, this)" aria-label="Drama Queen">Drama <br>King/Queen</button>
+                <button class="action-btn" onclick="showContent('child', 4, this)" aria-label="Appiccicoso">Appiccicoso</button>
+            </div>
+
+            <div id="display-child" class="card-container">
+                <!-- Content injected by JS -->
+                <div class="card" id="default-card-child" style="display: block; text-align: center; border-style: dashed;">
+                    <p>Cosa sta succedendo al <br>piccolo boss?</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        Auguri Papà! &copy; 2024 - Design Retro-Futuristico
+    </footer>
+
+    <script>
+        // PWA Service Worker Registration (Inline Data URI)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                const swContent = `
+                    const CACHE_NAME = 'dad-survive-v1';
+                    self.addEventListener('install', (e) => {
+                        e.waitUntil(caches.open(CACHE_NAME).then(c => c.add(location.href)));
+                    });
+                    self.addEventListener('fetch', (e) => {
+                        e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
+                    });
+                `;
+                const blob = new Blob([swContent], { type: 'text/javascript' });
+                const swUrl = URL.createObjectURL(blob);
+                navigator.serviceWorker.register(swUrl).catch(err => console.log('SW failed', err));
+            });
+        }
+
+        // Data Structures
+        const dadData = [
+            {
+                title: "Felice e Avventuroso",
+                movie: "Pirati dei Caraibi",
+                msg: "Cavalca il caos! Un pirata sa che la rotta può cambiare: gioca, sporcati le mani e goditi il viaggio. Il tesoro è ogni minuto passato insieme."
+            },
+            {
+                title: "Cool",
+                movie: "Miami Vice",
+                msg: "Sei il protagonista carismatico. Mantieni la calma e gestisci il caos con stile. Non dimenticare di ascoltare gli altri."
+            },
+            {
+                title: "Romantico",
+                movie: "Mr. & Mrs. Smith",
+                msg: "La sincronizzazione è necessaria. Cura la relazione e ricrea sintonia durante la giornata."
+            },
+            {
+                title: "Busy (Occupato)",
+                movie: "Bowfinger",
+                msg: "Se stai dirigendo un colossal, guida con gentilezza. Pianifica ma resta flessibile."
+            },
+            {
+                title: "Stress al Massimo",
+                movie: "Un giorno di ordinaria follia",
+                msg: "Applica la regola del 10: respira, conta e prenditi una pausa."
+            }
+        ];
+
+        const childData = [
+            {
+                title: "Meltdown Totale",
+                situation: "Pianto improvviso",
+                msg: "Non cercare logica: offri presenza e calma."
+            },
+            {
+                title: "NO a Tutto",
+                situation: "Dice sempre no",
+                msg: "Offri scelte guidate per dargli controllo."
+            },
+            {
+                title: "Modalità Caos",
+                situation: "Corre e distrugge tutto",
+                msg: "Canalizza l’energia in gioco."
+            },
+            {
+                title: "Drama King/Queen",
+                situation: "Reazioni esagerate",
+                msg: "Valida le emozioni e guida con calma."
+            },
+            {
+                title: "Appiccicoso",
+                situation: "Cerca sempre attenzione",
+                msg: "Dai attenzione piena per aumentare sicurezza."
+            }
+        ];
+
+        // UI Logic
+        function switchSection(target) {
+            // Update Navigation UI
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`nav-${target}`).classList.add('active');
+
+            // Update Sections
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(`section-${target}`).classList.add('active');
+        }
+
+        function showContent(type, index, element) {
+            const container = document.getElementById(`display-${type}`);
+            const data = type === 'dad' ? dadData[index] : childData[index];
+            
+            // Remove selection from other buttons in the same grid
+            element.parentElement.querySelectorAll('.action-btn').forEach(btn => btn.classList.remove('selected'));
+            element.classList.add('selected');
+
+            // Build HTML
+            let contentHtml = `<div class="card visible">`;
+            
+            if(type === 'dad') {
+                contentHtml += `
+                    <h3>${data.title}</h3>
+                    <span class="movie-tag">FILM: ${data.movie}</span>
+                    <p>${data.msg}</p>
+                `;
+            } else {
+                contentHtml += `
+                    <span class="sos-badge">SITUAZIONE: ${data.situation}</span>
+                    <h3>${data.title}</h3>
+                    <p>${data.msg}</p>
+                `;
+            }
+            
+            contentHtml += `</div>`;
+
+            // Transition effect
+            container.style.opacity = '0';
+            setTimeout(() => {
+                container.innerHTML = contentHtml;
+                container.style.opacity = '1';
+                container.style.transition = 'opacity 0.3s ease';
+            }, 150);
+        }
+    </script>
+</body>
+</html>
